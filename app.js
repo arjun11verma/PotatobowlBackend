@@ -1,7 +1,26 @@
 const express = require('express');
 const cors = require('cors');
 const bodyparser = require('body-parser');
-const database = require('./Database');
+
+const mysql = require('mysql');
+
+const HOST = '35.239.158.120';
+const QUESTIONS_DATABASE = 'Questions';
+const USER = 'root';
+const PASS = 'Waffles123';
+
+var database = mysql.createConnection({
+    host: HOST,
+    user: USER,
+    database: QUESTIONS_DATABASE,
+    password: PASS
+});
+
+database.connect((error) => {
+    if(error) {
+        console.log(error);
+    }
+});
 
 const app = express();
 app.use(cors());
@@ -33,7 +52,7 @@ const formatValues = (values) => {
     }
 }
 
-app.get('/test/testScreen', (req, res) => {
+app.get('/', (req, res) => {
     res.send("Hello!");
 });
 
